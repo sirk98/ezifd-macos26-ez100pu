@@ -67,3 +67,6 @@ src/towitoko/.dirstamp
 src/towitoko/.libs/
 stamp-h1
 tags
+dist/
+*.pkg
+output.bin

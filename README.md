@@ -1,6 +1,82 @@
 EZ100PU/EZUSB IFD Handler
 =========================
 
+macOS 26 and Apple Silicon support
+----------------------------------
+
+This fork adds a focused macOS build for the CASTLES EZ100PU reader
+(`0x0CA6:0x0010`). It was tested on Apple Silicon with macOS 26.6.2 and a
+Bit4id/Uanataca smart card using Firma4NG.
+
+The macOS-specific changes:
+
+- build a native arm64 IFD bundle with libusb linked statically;
+- use a dedicated bundle identifier and match only the EZ100PU reader;
+- avoid unresolved internal symbols produced by the macOS 26 linker;
+- install alongside Apple's and vendor CCID drivers without replacing them.
+
+### Build a local installer
+
+Install Apple's Command Line Tools and the Homebrew build dependencies:
+
+```sh
+xcode-select --install
+brew install autoconf automake autoconf-archive libtool pkgconf libusb
+```
+
+Then clone recursively and build:
+
+```sh
+git clone --recursive <repository-url> ezIFD
+cd ezIFD
+./scripts/build-macos-package.sh
+```
+
+The generated package is written to `dist/`. It installs the driver at:
+
+```text
+/usr/local/libexec/SmartCardServices/drivers/ifd-ez-castles.bundle
+```
+
+The local package is ad-hoc signed. A public binary release should be signed
+with an Apple Developer ID and notarized. Never bypass a macOS security warning
+for a package obtained from an untrusted source; building from source is the
+recommended option.
+
+### Activate and verify
+
+After installation, disconnect the reader. Restart the smart-card service:
+
+```sh
+./scripts/restart-smartcard-service.sh
+```
+
+Wait five seconds, reconnect the reader, and insert the card. Verify detection:
+
+```sh
+system_profiler SPSmartCardsDataType
+```
+
+The `Readers` section should contain `CASTLES EZUSB Smart Card Reader`.
+
+### Uninstall
+
+```sh
+./scripts/uninstall-macos.sh
+```
+
+This removes only this fork's `ifd-ez-castles.bundle`; it does not modify
+Apple's CCID driver or other vendor middleware.
+
+### Scope and warranty
+
+This is an experimental compatibility build, provided without warranty under
+the project's existing GNU LGPL 2.1 terms. No PIN, certificate, signed document,
+ATR dump, or other user data is included in the repository.
+
+Original project information
+----------------------------
+
 This is a fork of Ludovic Rousseau's [CCID](https://github.com/LudovicRousseau/CCID)
 to support Castles EZUSB card readers (EZ100PU).
 

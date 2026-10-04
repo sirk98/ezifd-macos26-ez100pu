@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>MAGIC_TARGET</string>
 	<key>CFBundleIdentifier</key>
-	<string>fr.apdu.ccid.smartcardccid</string>
+	<string>local.ezifd.castles.ez100pu</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	MAGIC_CLASS
@@ -18,7 +18,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>0.0.1d1</string>
+	<string>1.5.5.1</string>
 	<key>ifdCapabilities</key>
 	<string>0x00000000</string>
 

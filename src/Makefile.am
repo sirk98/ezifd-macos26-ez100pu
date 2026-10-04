@@ -29,7 +29,7 @@ COMMON = ccid.c \
 	defs.h \
 	ifdhandler.c \
 	sys_generic.h \
-	sys_unix.c \
+	sys_unix_export.c \
 	utils.c \
 	utils.h
 USB = ccid_usb.c ccid_usb.h
@@ -59,12 +59,12 @@ endif
 libccid_la_SOURCES = $(COMMON) $(USB) $(TOKEN_PARSER) $(PROVIDED_BY_PCSC) $(T1)
 libccid_la_LIBADD = $(LIBUSB_LIBS) $(PTHREAD_LIBS)
 libccid_la_CFLAGS = $(PCSC_CFLAGS) $(LIBUSB_CFLAGS) $(PTHREAD_CFLAGS) \
-	$(SYMBOL_VISIBILITY) -D$(CCID_VERSION) -DSIMCLIST_NO_DUMPRESTORE
+	-D$(CCID_VERSION) -DSIMCLIST_NO_DUMPRESTORE
 libccid_la_LDFLAGS = -avoid-version
 
 libccidtwin_la_SOURCES = $(COMMON) $(SERIAL) $(TOKEN_PARSER) \
 	$(PROVIDED_BY_PCSC) $(T1)
-libccidtwin_la_CFLAGS = $(PCSC_CFLAGS) $(PTHREAD_CFLAGS) $(SYMBOL_VISIBILITY) \
+libccidtwin_la_CFLAGS = $(PCSC_CFLAGS) $(PTHREAD_CFLAGS) \
 	-DTWIN_SERIAL -D$(CCID_VERSION) -DSIMCLIST_NO_DUMPRESTORE
 libccidtwin_la_LIBADD = $(PTHREAD_LIBS)
 libccidtwin_la_LDFLAGS = -avoid-version
@@ -111,4 +111,3 @@ uninstall_ccid:
 uninstall_ccidtwin:
 	rm -f "$(DESTDIR)$(ccidtwindir)/$(CCIDTWIN_LIB)"
 	rm -f "$(DESTDIR)/$(serialconfdir)/libccidtwin"
-

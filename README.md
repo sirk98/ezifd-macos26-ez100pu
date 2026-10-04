@@ -27,7 +27,7 @@ brew install autoconf automake autoconf-archive libtool pkgconf libusb
 Then clone recursively and build:
 
 ```sh
-git clone --recursive <repository-url> ezIFD
+git clone --recursive https://github.com/sirk98/ezifd-macos26-ez100pu.git ezIFD
 cd ezIFD
 ./scripts/build-macos-package.sh
 ```
